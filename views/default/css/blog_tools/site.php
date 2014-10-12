@@ -15,6 +15,10 @@
 	width: 100%;
 }
 
+.blog-tools-blog-image-extralarge img {
+	width: 450px;
+}
+
 .blog-tools-full-owner {
 	border: 1px solid #4690D6;
 	background: #E4ECF5;
@@ -88,4 +92,7 @@
 	padding: 0;
 	border: none;
 	float: left;
+}
+
+.blog-excerpt {
 }

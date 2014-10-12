@@ -14,6 +14,7 @@
 		"small" => elgg_echo("blog_tools:settings:size:small"),
 		"medium" => elgg_echo("blog_tools:settings:size:medium"),
 		"large" => elgg_echo("blog_tools:settings:size:large"),
+		"extralarge" => elgg_echo("blog_tools:settings:size:extralarge"),
 		"master" => elgg_echo("blog_tools:settings:size:master"),
 	);
 	
@@ -112,6 +113,11 @@
 	$settings_full .= "<td>" . elgg_view("input/dropdown", array("name" => "params[show_full_related]", "options_values" => $show_full_related_options, "value" => $plugin->show_full_related)) . "</td>";
 	$settings_full .= "</tr>";
 	
+	$settings_full .= "<tr>";
+	$settings_full .= "<td>" . elgg_echo('blog_tools:settings:full:show_excerpt') . "</td>";
+	$settings_full .= "<td>" . elgg_view("input/dropdown", array("name" => "params[show_excerpt]", "options_values" => $noyes_options, "value" => $plugin->show_excerpt)) . "</td>";
+	$settings_full .= "</tr>";	
+
 	$settings_full .= "</table>";
 	
 	echo elgg_view_module("inline", elgg_echo("blog_tools:settings:full"), $settings_full);
@@ -139,4 +145,3 @@
 	$settings_other .= "</table>";
 	
 	echo elgg_view_module("inline", elgg_echo("blog_tools:settings:other"), $settings_other);
-	

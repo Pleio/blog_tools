@@ -105,10 +105,25 @@
 		$params = $params + $vars;
 		$summary = elgg_view('object/elements/summary', $params);
 
+		if (elgg_get_plugin_setting("show_excerpt", "blog_tools") == "yes") {
+			$excerpt_title = "<h3>" . elgg_echo("blog_tools:view:excerpt:title") . "</h3>";
+
+			$excerpt = elgg_view('output/longtext', array(
+				'value' => $excerpt_title . $blog->excerpt,
+				'class' => 'blog-excerpt'
+			));
+
+			$clear = "<div style=\"clear:both;\"></div>";
+
+			$body = $blog_icon . $excerpt . $clear . $body;
+		} else {
+			$body = $blog_icon . $body;
+		}
+
 		echo elgg_view("object/elements/full", array(
 			"summary" => $summary,
 			"icon" => $owner_icon,
-			"body" => $blog_icon . $body,
+			"body" => $body
 		));
 	} else {
 		// how to show strapline
