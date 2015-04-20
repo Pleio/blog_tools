@@ -90,7 +90,11 @@
 				}
 				
 				if ($blog_tools_listing_image_align != "none") {
-					$image_params["src"] = $entity->getIconURL($blog_tools_lising_image_size);
+					if ($blog_tools_lising_image_size == "extralarge") {
+						$image_params["src"] = $entity->getIconURL("master");
+					} else {
+						$image_params["src"] = $entity->getIconURL($blog_tools_lising_image_size);
+					}
 					
 					$class[] = "blog-tools-blog-image-" . $blog_tools_lising_image_size;
 					
