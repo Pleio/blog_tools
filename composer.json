@@ -1,5 +1,5 @@
 {
-    "name": "coldtrick/blog_tools",
+    "name": "pleio/blog_tools",
     "type": "elgg-plugin",
     "require": {
         "composer/installers": "~1.0"
