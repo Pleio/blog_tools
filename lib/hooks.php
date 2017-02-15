@@ -196,6 +196,7 @@
 					
 					// publish blog
 					$entity->status = "published";
+
 					
 					// notify owner
 					notify_user($entity->getOwnerGUID(),
@@ -223,6 +224,8 @@
 					
 					// unpublish blog
 					$entity->status = "draft";
+					$entity->future_access = $entity->access_id;
+					$entity->access_id = ACCESS_PRIVATE;
 					
 					// notify owner
 					notify_user($entity->getOwnerGUID(),
