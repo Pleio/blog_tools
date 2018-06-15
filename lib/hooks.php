@@ -138,16 +138,14 @@
 		return $result;
 	}
 	
-	function blog_tools_daily_cron_hook($hook, $type, $return_value, $params){
+	function blog_tools_hourly_cron_hook($hook, $type, $return_value, $params){
 		
 		// only do if this is configured
 		if(blog_tools_use_advanced_publication_options()){
 			$dbprefix = elgg_get_config("dbprefix");
 			$publication_id = add_metastring("publication_date");
 			$expiration_id = add_metastring("expiration_date");
-			
-			$time = elgg_extract("time", $params, time());
-			
+
 			$publish_options = array(
 				"type" => "object",
 				"subtype" => "blog",
@@ -164,7 +162,7 @@
 				),
 				"wheres" => array("((mdtime.name_id = " . $publication_id . ") AND (DATE(mstime.string) = DATE(NOW())))")
 			);
-			
+
 			$unpublish_options = array(
 				"type" => "object",
 				"subtype" => "blog",
@@ -181,23 +179,22 @@
 				),
 				"wheres" => array("((mdtime.name_id = " . $expiration_id . ") AND (DATE(mstime.string) = DATE(NOW())))")
 			);
-			
+
 			// ignore access
 			$ia = elgg_set_ignore_access(true);
-			
+
 			// get unpublished blogs that need to be published
 			if($entities = elgg_get_entities_from_metadata($publish_options)){
 				foreach ($entities as $entity){
 					// add river item
 					add_to_river("river/object/blog/create", "create", $entity->getOwnerGUID(), $entity->getGUID());
-					
+
 					// set correct time created
-					$entity->time_created = $time;
-					
+					$entity->time_created = time();
+
 					// publish blog
 					$entity->status = "published";
 
-					
 					// notify owner
 					notify_user($entity->getOwnerGUID(),
 								$entity->site_guid,
@@ -208,6 +205,10 @@
 								))
 					);
 					
+					if ($entity->future_access) {
+						$entity->access_id = $entity->future_access;
+					}
+
 					// save everything
 					$entity->save();
 				}
